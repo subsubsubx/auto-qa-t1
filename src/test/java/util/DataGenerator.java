@@ -2,24 +2,23 @@ package util;
 
 import qa.auto.innotech.Student;
 
+import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class DataGenerator {
+    public static List<Integer> VALID_GRADES = List.of(2, 3, 4, 5);
 
     public static Student generateStudent() {
-        return new Student(generateString().collect(Collectors.joining()));
+        Student student = new Student(generateString().collect(Collectors.joining()));
+        student.setClient(new StudentClientMock());
+        return student;
     }
 
-    public static void generateGrades(Student student, boolean valid) {
-        if (valid) {
-            IntStream.rangeClosed(3, 5).forEach(student::addGrade);
-        } else {
-            IntStream.rangeClosed(0, 1).forEach(student::addGrade);
-            IntStream.rangeClosed(6, 10).forEach(student::addGrade);
-        }
+    public static IntStream generateGrades() {
+        return IntStream.rangeClosed(-5, 10);
     }
 
     public static Stream<String> generateString() {
