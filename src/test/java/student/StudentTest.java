@@ -1,8 +1,9 @@
+package student;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import qa.auto.innotech.Student;
-import qa.auto.innotech.StudentClient;
+import qa.auto.innotech.model.Student;
 import util.StudentClientMock;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,9 +11,7 @@ import static util.TestData.TEST_STRINGS;
 import static util.TestData.VALID_GRADES;
 
 
-public class StudentTest {
-
-    private final StudentClient client = new StudentClientMock();
+public class StudentTest extends StudentBaseTest {
 
     @Test
     void getGradesReturnsDefensiveCopy() {
@@ -63,7 +62,6 @@ public class StudentTest {
 
         assertThrows(IllegalArgumentException.class, () -> student.addGrade(grade));
     }
-
 
     @Test
     void hashCodesEqualIfAllPropertiesEqual() {

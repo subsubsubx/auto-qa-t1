@@ -1,22 +1,39 @@
-package qa.auto.innotech;
+package qa.auto.innotech.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import qa.auto.innotech.util.StudentClient;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 
+@NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Student {
 
-    private final StudentClient client;
+    @Getter
+    @Setter
+    private Integer id;
+    private StudentClient client;
     @Getter
     @Setter
     private String name;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @JsonProperty("marks")
     private final List<Integer> grades = new ArrayList<>();
 
     public Student(String name, StudentClient client) {
+        this.name = name;
+        this.client = client;
+    }
+
+    public Student(Integer id, String name, StudentClient client) {
+        this.id = id;
         this.name = name;
         this.client = client;
     }
