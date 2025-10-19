@@ -1,42 +1,29 @@
 package student;
 
 import io.restassured.response.Response;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import qa.auto.innotech.model.Student;
 import qa.auto.innotech.step.BaseStep;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import static student.TestStudentExtension.students;
 import static util.TestData.TEST_STRINGS;
 import static util.TestData.VALID_GRADES;
 
+
+@ExtendWith(TestStudentExtension.class)
 public class StudentApiTest extends StudentBaseTest {
 
-    private final List<Student> students = new ArrayList<>();
-
-    @BeforeEach
-    void addStudents() {
-        IntStream.range(0, 5).forEach(it -> {
-            Student student = new Student(getRandomId(), TEST_STRINGS.get(new Random().nextInt(TEST_STRINGS.size())), client);
-            studentStep.doPost(student);
-            students.add(student);
-        });
-    }
-
-    @AfterEach
-    void deleteStudents() {
-        students.forEach(student -> studentStep.doDelete(student.getId()));
-        students.clear();
-    }
-
     @Test
+    @TestStudent
     @DisplayName("get по id возвращает JSON студента с указанным ID и заполненным именем, если такой есть в базе, код 200")
     void shouldReturn200IfStudentExists() {
         int studentId = students.get(0).getId();
@@ -48,8 +35,17 @@ public class StudentApiTest extends StudentBaseTest {
     }
 
     @Test
-    @DisplayName("get по id возвращает код 404, если студента с данным ID в базе нет")
+    @TestStudent
+    @DisplayName("get по id возвращает код 404, если студента с данным ID в базе нет - в бд есть записи")
     void shouldReturn400IfStudentNotExists() {
+        studentStep.doGet(getRandomId())
+                .then()
+                .statusCode(404);
+    }
+
+    @Test
+    @DisplayName("get по id возвращает код 404, если студента с данным ID в базе нет - пустая бд")
+    void shouldReturn400IfStudentNotExistsEmptyDB() {
         studentStep.doGet(getRandomId())
                 .then()
                 .statusCode(404);
@@ -59,7 +55,6 @@ public class StudentApiTest extends StudentBaseTest {
     @DisplayName("post добавляет студента в базу, если студента с таким ID ранее не было, при этом имя заполнено, код 201.")
     void shouldAddUserAndReturn201IfNoIdExists() {
         Student student = new Student(getRandomId(), TEST_STRINGS.get(0), client);
-        VALID_GRADES.forEach(student::addGrade);
         studentStep.doPost(student)
                 .then()
                 .statusCode(201);
@@ -67,24 +62,19 @@ public class StudentApiTest extends StudentBaseTest {
     }
 
     @Test
-    @DisplayName("post обновляет студента в базе, если студент с таким ID ранее был, при этом имя заполнено, код 201.")
-    void shouldUpdateUserAndReturn201IfIdExists() {
-        Integer id = students.get(0).getId();
-        Student expectedStudent = new Student(id, "Test name", client);
-        expectedStudent.addGrade(VALID_GRADES.get(0));
-        studentStep.doPost(expectedStudent)
+    @DisplayName("post возвращает код 400, если имя не заполнено")
+    void shouldReturn400IfNameNull() {
+        Student student = new Student(getRandomId(), null, client);
+        studentStep.doPost(student)
                 .then()
-                .statusCode(201);
-
-        Student actualStudent = studentStep.doGet(id).as(Student.class);
-
-        assertEquals(expectedStudent, actualStudent);
+                .statusCode(400);
+        students.add(student);
     }
 
     @Test
     @DisplayName("post добавляет студента в базе, если ID null, то возвращается назначенный ID, код 201")
     void shouldAddUserAndReturn201IfIdNull() {
-        Student student = new Student("Test null name", client);
+        Student student = new Student("Test null id", client);
         Response response = studentStep.doPost(student);
         response
                 .then()
@@ -96,27 +86,34 @@ public class StudentApiTest extends StudentBaseTest {
     }
 
     @Test
-    @DisplayName("post возвращает код 400, если имя не заполнено")
-    void shouldReturn400IfNameNull() {
-        Student student = new Student(getRandomId(), null, client);
-        studentStep.doPost(student)
+    @TestStudent
+    @DisplayName("post обновляет студента в базе, если студент с таким ID ранее был, при этом имя заполнено, код 201.")
+    void shouldUpdateUserAndReturn201IfIdExists() {
+        Integer id = students.get(0).getId();
+        Student expectedStudent = new Student(id, "Test name", client);
+        studentStep.doPost(expectedStudent)
                 .then()
-                .statusCode(400);
+                .statusCode(201);
+
+        Student actualStudent = studentStep.doGet(id).as(Student.class);
+
+        assertEquals(expectedStudent, actualStudent);
     }
 
     @Test
+    @TestStudent
     @DisplayName("delete удаляет студента с указанным ID из базы, код 200")
     void shouldReturn200AndDeleteStudent() {
-        Integer randomStudentId = students.get(new Random().nextInt(students.size())).getId();
+        Integer randomStudentId = students.get(0).getId();
         studentStep.doDelete(randomStudentId)
                 .then()
                 .statusCode(200);
 
-        assertEquals(404, studentStep.doGet(randomStudentId).statusCode());
+        assertNotEquals(201, studentStep.doGet(randomStudentId).statusCode());
     }
 
     @Test
-    @DisplayName("delete возвращает код 404, если студента с таким ID в базе не")
+    @DisplayName("delete возвращает код 404, если студента с таким ID в базе нет")
     void shouldReturn404IfNoStudentFoundById() {
         studentStep.doDelete(getRandomId())
                 .then()
@@ -127,7 +124,6 @@ public class StudentApiTest extends StudentBaseTest {
     @DisplayName("get /topStudent код 200 и пустое тело, если студентов в базе нет")
     void shouldReturn200AndEmptyResponseIfNoStudentsFound() {
         BaseStep step = new BaseStep("/topStudent");
-        deleteStudents();
         step.doGet()
                 .then()
                 .statusCode(200)
@@ -135,6 +131,7 @@ public class StudentApiTest extends StudentBaseTest {
     }
 
     @Test
+    @TestStudent(quantity = 3)
     @DisplayName("get /topStudent код 200 и пустое тело, если ни у кого из студентов в базе нет оценок")
     void shouldReturn200AndEmptyResponseIfNoStudentGradesFound() {
         BaseStep step = new BaseStep("/topStudent");
@@ -145,6 +142,7 @@ public class StudentApiTest extends StudentBaseTest {
     }
 
     @Test
+    @TestStudent(quantity = 5)
     @DisplayName
             ("get /topStudent код 200 и один студент, если у него максимальная средняя оценка, либо же среди всех " +
                     "студентов с максимальной средней у него их больше всего")
@@ -171,6 +169,7 @@ public class StudentApiTest extends StudentBaseTest {
     }
 
     @Test
+    @TestStudent(quantity = 5)
     @DisplayName
             ("get /topStudent код 200 и несколько студентов, если у них всех эта оценка максимальная и при этом они " +
                     "равны по количеству оценок")
@@ -202,6 +201,9 @@ public class StudentApiTest extends StudentBaseTest {
     }
 
     private int getRandomId() {
+        if (students.isEmpty()) {
+            return new Random().nextInt(Integer.MAX_VALUE);
+        }
         List<Integer> ids = students.stream()
                 .map(Student::getId)
                 .toList();
@@ -212,3 +214,5 @@ public class StudentApiTest extends StudentBaseTest {
         return randomId;
     }
 }
+
+
