@@ -40,7 +40,8 @@ public class StudentApiTest extends StudentBaseTest {
     void shouldReturn400IfStudentNotExists() {
         studentStep.doGet(getRandomId())
                 .then()
-                .statusCode(404);
+                .statusCode(404)
+                .body(emptyString());
     }
 
     @Test
@@ -65,10 +66,10 @@ public class StudentApiTest extends StudentBaseTest {
     @DisplayName("post возвращает код 400, если имя не заполнено")
     void shouldReturn400IfNameNull() {
         Student student = new Student(getRandomId(), null, client);
+        students.add(student);
         studentStep.doPost(student)
                 .then()
                 .statusCode(400);
-        students.add(student);
     }
 
     @Test
@@ -76,13 +77,18 @@ public class StudentApiTest extends StudentBaseTest {
     void shouldAddUserAndReturn201IfIdNull() {
         Student student = new Student("Test null id", client);
         Response response = studentStep.doPost(student);
-        response
-                .then()
+        response.then()
                 .statusCode(201)
                 .body("", notNullValue())
                 .body("", instanceOf(Integer.class));
-        student.setId(Integer.parseInt(response.body().print()));
+
+        int actualId = studentStep.doGet(Integer.parseInt(response.body().print()))
+                .jsonPath()
+                .getInt("id");
+
+        student.setId(actualId);
         students.add(student);
+        assertEquals(Integer.parseInt(response.body().print()), actualId, "вернулся другой ид");
     }
 
     @Test
@@ -214,5 +220,3 @@ public class StudentApiTest extends StudentBaseTest {
         return randomId;
     }
 }
-
-
