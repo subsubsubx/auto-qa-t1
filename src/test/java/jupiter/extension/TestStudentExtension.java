@@ -1,9 +1,11 @@
-package student;
+package jupiter.extension;
 
+import jupiter.TestStudent;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import qa.auto.innotech.model.Student;
+import student.StudentBaseTest;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;

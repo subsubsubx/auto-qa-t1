@@ -1,6 +1,8 @@
 package student;
 
 import io.restassured.response.Response;
+import jupiter.TestStudent;
+import jupiter.extension.TestStudentExtension;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +16,7 @@ import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static student.TestStudentExtension.students;
+import static jupiter.extension.TestStudentExtension.students;
 import static util.TestData.TEST_STRINGS;
 import static util.TestData.VALID_GRADES;
 

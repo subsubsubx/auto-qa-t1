@@ -4,6 +4,8 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.aeonbits.owner.ConfigFactory;
+import qa.auto.innotech.env.config.APIConfig;
 
 import static io.restassured.RestAssured.given;
 
@@ -12,6 +14,9 @@ public abstract class RestUtil {
     private final String path;
     public RestUtil(String path) {
         this.path = path;
+        APIConfig config = ConfigFactory.create(APIConfig.class);
+        //TODO:
+        // base url - config.url();
     }
 
     private RequestSpecification getDefaultSpec() {

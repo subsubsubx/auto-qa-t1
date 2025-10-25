@@ -1,4 +1,4 @@
-package student;
+package jupiter;
 
 
 import java.lang.annotation.ElementType;
