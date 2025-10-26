@@ -16,7 +16,7 @@ import static io.restassured.RestAssured.given;
 
 public abstract class RestUtil {
 
-    protected final APIConfig config = Env.API.getConfig();
+    protected APIConfig config;
     private final String path;
 
     public RestUtil(String path) {

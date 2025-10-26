@@ -2,8 +2,8 @@ package qa.auto.innotech.step;
 
 import qa.auto.innotech.util.RestUtil;
 
-public class BaseStep extends RestUtil {
-    public BaseStep(String path) {
+public class _BaseStep extends RestUtil {
+    public _BaseStep(String path) {
         super(path);
     }
 }

@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "name": "Pete",
+    "departmentId": 1
+  },
+  {
+    "id": 2,
+    "name": "Ann",
+    "departmentId": 1
+  },
+  {
+    "id": 3,
+    "name": "Liz",
+    "departmentId": 2
+  },
+  {
+    "id": 4,
+    "name": "tom",
+    "departmentId": 2
+  },
+  {
+    "id": 5,
+    "name": "todd",
+    "departmentId": 3
+  }
+]

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import qa.auto.innotech.model.Student;
-import qa.auto.innotech.step.BaseStep;
+import qa.auto.innotech.step._BaseStep;
 
 import java.util.List;
 import java.util.Random;
@@ -131,7 +131,7 @@ public class StudentApiTest extends StudentBaseTest {
     @Test
     @DisplayName("get /topStudent код 200 и пустое тело, если студентов в базе нет")
     void shouldReturn200AndEmptyResponseIfNoStudentsFound() {
-        BaseStep step = new BaseStep("/topStudent");
+        _BaseStep step = new _BaseStep("/topStudent");
         step.doGet()
                 .then()
                 .statusCode(200)
@@ -142,7 +142,7 @@ public class StudentApiTest extends StudentBaseTest {
     @TestStudent(quantity = 3)
     @DisplayName("get /topStudent код 200 и пустое тело, если ни у кого из студентов в базе нет оценок")
     void shouldReturn200AndEmptyResponseIfNoStudentGradesFound() {
-        BaseStep step = new BaseStep("/topStudent");
+        _BaseStep step = new _BaseStep("/topStudent");
         step.doGet()
                 .then()
                 .statusCode(200)
@@ -155,7 +155,7 @@ public class StudentApiTest extends StudentBaseTest {
             ("get /topStudent код 200 и один студент, если у него максимальная средняя оценка, либо же среди всех " +
                     "студентов с максимальной средней у него их больше всего")
     void shouldReturn200AndStudentWithHighestAvgGrade() {
-        BaseStep step = new BaseStep("/topStudent");
+        _BaseStep step = new _BaseStep("/topStudent");
 
         Student student1 = students.get(0);
         VALID_GRADES.forEach(student1::addGrade);
@@ -182,7 +182,7 @@ public class StudentApiTest extends StudentBaseTest {
             ("get /topStudent код 200 и несколько студентов, если у них всех эта оценка максимальная и при этом они " +
                     "равны по количеству оценок")
     void shouldReturn200AndStudentsWithHighestGradeHavingEqualGradeCount() {
-        BaseStep step = new BaseStep("/topStudent");
+        _BaseStep step = new _BaseStep("/topStudent");
 
         Student student1 = students.get(0);
         Student student2 = students.get(students.size() - 1);

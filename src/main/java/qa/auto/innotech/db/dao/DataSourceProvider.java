@@ -5,7 +5,6 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.jdbi.v3.core.Jdbi;
 import qa.auto.innotech.env.config.DBConfig;
 
 import javax.sql.DataSource;
@@ -20,8 +19,8 @@ public class DataSourceProvider {
         HikariConfig hikariConfig = new HikariConfig();
 
         hikariConfig.setJdbcUrl(config.url());
-       // hikariConfig.setUsername(config.user());
-       // hikariConfig.setPassword(config.password());
+        // hikariConfig.setUsername(config.user());
+        // hikariConfig.setPassword(config.password());
 
         hikariConfig.setConnectionTimeout(30000);
         hikariConfig.setPoolName("H2");
