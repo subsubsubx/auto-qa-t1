@@ -7,7 +7,5 @@ import util.StudentClientMock;
 public class StudentBaseTest {
 
     protected final StudentClient client = new StudentClientMock();
-
     protected final StudentStep studentStep = new StudentStep();
-
 }

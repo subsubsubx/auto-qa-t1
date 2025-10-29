@@ -7,7 +7,6 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import qa.auto.innotech.env.Env;
 import qa.auto.innotech.env.config.APIConfig;
 
 import java.util.List;

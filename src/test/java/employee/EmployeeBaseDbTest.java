@@ -7,16 +7,15 @@ import qa.auto.innotech.db.dao.entity.EmployeeEntity;
 
 import java.util.List;
 
-import static util.TestData.fillDepartments;
-import static util.TestData.fillEmployees;
+import static util.TestData.*;
 
 public class EmployeeBaseDbTest {
     protected EmployeeDao employeeDao = new EmployeeDao();
     protected DepartmentDao departmentDao = new DepartmentDao();
 
     protected void init() {
-        List<DepartmentEntity> departments = fillDepartments();
-        List<EmployeeEntity> employees = fillEmployees();
+        List<DepartmentEntity> departments = readListFromJson("TestDepartments.json", DepartmentEntity.class);
+        List<EmployeeEntity> employees = readListFromJson("TestEmployees.json", EmployeeEntity.class);
 
         departments.forEach(department -> {
             departmentDao.getJdbi().useHandle(handle -> {
