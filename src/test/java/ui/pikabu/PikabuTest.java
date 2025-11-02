@@ -16,10 +16,12 @@ public class PikabuTest extends PikabuBaseTest {
 
     @Test
     void shouldPopUpErrorMessageOnInvalidLoginAttemptFromModalWindow() throws InterruptedException {
-        mainPage.checkTitle()
-                .openLoginModalWindow();
-        Thread.sleep(5000);
-mainPage                .performLoginModalWindow(invalidUser)
-               .checkInvalidLoginModal();
+        mainPage.check()
+                .checkTitle()
+                .page()
+                .openLoginModalWindow()
+                .performLoginModalWindow(invalidUser)
+                .check()
+                .checkInvalidLoginModal();
     }
 }
