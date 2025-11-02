@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import qa.auto.innotech.util.StudentClient;
+import qa.auto.innotech.api.util.StudentClient;
 
 import java.util.ArrayList;
 import java.util.List;

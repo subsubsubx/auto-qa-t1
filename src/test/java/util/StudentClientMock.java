@@ -1,6 +1,6 @@
 package util;
 
-import qa.auto.innotech.util.StudentClient;
+import qa.auto.innotech.api.util.StudentClient;
 
 public class StudentClientMock implements StudentClient {
 

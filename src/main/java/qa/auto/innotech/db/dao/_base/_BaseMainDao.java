@@ -17,14 +17,14 @@ public abstract class _BaseMainDao {
         jdbi.installPlugin(new SqlObjectPlugin());
         jdbi.getConfig(ColumnMappers.class).setCoalesceNullPrimitivesToDefaults(false);
         log.info("init database");
-        if ("qa".equals(System.getenv("env"))) {
+        if ("qa".equals(Env.getCurrentEnv())) {
             createDB();
             log.info("Local DB created successfully");
         }
         log.info("Base main DAO done");
     }
 
-    public abstract String getTableName();
+    protected abstract String getTableName();
 
     public Jdbi getJdbi() {
         return jdbi;

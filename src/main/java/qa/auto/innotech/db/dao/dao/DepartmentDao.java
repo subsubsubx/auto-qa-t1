@@ -17,7 +17,7 @@ public class DepartmentDao extends _BaseMainDao {
     }
 
     @Override
-    public String getTableName() {
+    protected String getTableName() {
         return "Department";
     }
 }

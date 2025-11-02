@@ -38,7 +38,7 @@ public class EmployeeDao extends _BaseMainDao {
     }
 
     @Override
-    public String getTableName() {
+    protected String getTableName() {
         return "Employee";
     }
 }
