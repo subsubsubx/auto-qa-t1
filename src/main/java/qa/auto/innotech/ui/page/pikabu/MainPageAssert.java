@@ -30,5 +30,4 @@ public class MainPageAssert extends AbstractAssert<MainPageAssert, MainPage> {
 
         return this;
     }
-
 }

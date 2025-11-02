@@ -1,13 +1,11 @@
 package ui.pikabu;
 
 import com.codeborne.selenide.Selenide;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
 public class PikabuTest extends PikabuBaseTest {
-
 
     @BeforeEach
     void init() {
@@ -15,7 +13,7 @@ public class PikabuTest extends PikabuBaseTest {
     }
 
     @Test
-    void shouldPopUpErrorMessageOnInvalidLoginAttemptFromModalWindow() throws InterruptedException {
+    void shouldPopUpErrorMessageOnInvalidLoginAttemptFromModalWindow() {
         mainPage.check()
                 .checkTitle()
                 .page()
