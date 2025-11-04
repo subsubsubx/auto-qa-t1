@@ -40,7 +40,7 @@ public class UiTestExtension implements AfterEachCallback, BeforeAllCallback {
     }
 
     private WebDriver getWebDriver() {
-        if ("firefox".equals(System.getProperty("ui.browser"))) {
+        if ("firefox".equals(System.getenv("ui.browser"))) {
             Configuration.browser = "firefox";
             return getFirefoxWebDriver();
         }

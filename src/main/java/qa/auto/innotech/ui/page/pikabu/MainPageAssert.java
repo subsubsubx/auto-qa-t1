@@ -24,7 +24,8 @@ public class MainPageAssert extends AbstractAssert<MainPageAssert, MainPage> {
     }
 
     public MainPageAssert checkInvalidLoginModal() {
-        page().errorPopUpMessageModal
+        actual
+                .errorPopUpMessageModal
                 .shouldBe(visible)
                 .shouldHave(text(page().errorMessage));
 

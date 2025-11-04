@@ -22,8 +22,6 @@ public class MainPage implements Assertable<MainPage, MainPageAssert> {
      SelenideElement submitLoginButtonModal = loginModalWindow.$x(".//button[@type='submit']");
      SelenideElement errorPopUpMessageModal = loginModalWindow.$x(".//ancestor::div[@class='auth-modal']//preceding-sibling::span[@class='auth__error auth__error_top']");
 
-
-
     public MainPage openLoginModalWindow() {
         loginModalButton
                 .shouldBe(visible)
