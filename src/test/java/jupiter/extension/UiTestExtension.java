@@ -30,6 +30,7 @@ public class UiTestExtension implements AfterEachCallback, BeforeAllCallback {
         log.info("Selenide Configuration");
         Configuration.screenshots = true;
         Configuration.savePageSource = true;
+        Configuration.timeout = uiConfig.timeout();
         Configuration.reportsFolder = uiConfig.reportsFolder();
         WebDriverRunner.setWebDriver(getWebDriver());
     }

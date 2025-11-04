@@ -2,8 +2,6 @@ package qa.auto.innotech.env.config;
 
 import org.aeonbits.owner.Config;
 
-import java.io.File;
-
 @Config.LoadPolicy(Config.LoadType.MERGE)
 @Config.Sources({
         "system:env",
@@ -30,9 +28,15 @@ public interface UiConfig extends Config {
     @Key("ui.chrome.win64.binary.loc")
     String getChrome64BinaryLoc();
 
+    @Key("ui.timeout")
+    long timeout();
+
     @Key("ui.google.base.url")
     String googleBaseUrl();
 
     @Key("ui.pikabu.base.url")
     String pikabuBaseUrl();
+
+    @Key("ui.pobeda.base.url")
+    String pobedaBaseUrl();
 }

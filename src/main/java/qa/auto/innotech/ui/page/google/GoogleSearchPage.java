@@ -7,7 +7,7 @@ import static com.codeborne.selenide.Selenide.$$x;
 
 public class GoogleSearchPage implements Assertable<GoogleSearchPage, GoogleSearchPageAssert> {
 
-    ElementsCollection searchResults = $$x("");
+    ElementsCollection searchResults = $$x("//div[@id='rso']//div[starts-with(@class, 'notranslate')]");
 
     public <T> T selectSearchResultByNumber(int num, T page) {
         searchResults

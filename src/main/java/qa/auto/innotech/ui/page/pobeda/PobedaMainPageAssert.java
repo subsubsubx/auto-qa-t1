@@ -3,9 +3,8 @@ package qa.auto.innotech.ui.page.pobeda;
 
 import org.assertj.core.api.AbstractAssert;
 
-import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.CollectionCondition.allMatch;
 import static com.codeborne.selenide.Condition.visible;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PobedaMainPageAssert extends AbstractAssert<PobedaMainPageAssert, PobedaMainPage> {
 
@@ -18,18 +17,20 @@ public class PobedaMainPageAssert extends AbstractAssert<PobedaMainPageAssert, P
     }
 
     public PobedaMainPageAssert checkLoadPage() {
-        actual
+        boolean match = actual
                 .mainPagePic
                 .shouldBe(visible)
-                .shouldHave(text("Полетели в Калининград!"));
-
+                .$$x(".//following-sibling::div//div").stream()
+                .anyMatch(element -> "Полетели в Калининград!".equals(element.getText()));
+        if (!match) {
+            throw new AssertionError("Text not found");
+        }
         return this;
     }
 
     public PobedaMainPageAssert checkEngLocale(PobedaMainPage.Locale locale) {
-        assertTrue(actual.ticketOptionsList.stream()
-                .allMatch(e -> locale.getCheckStrings().contains(e.getText())));
-
+        actual.ticketOptionsList.should(allMatch("Текстовки на странице на языке ".concat(locale.getValue()),
+                e -> locale.getCheckStrings().contains(e.getText())));
         return this;
     }
 }

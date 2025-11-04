@@ -8,28 +8,22 @@ import qa.auto.innotech.ui.assertions.Assertable;
 
 import java.util.List;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class PobedaMainPage implements Assertable<PobedaMainPage, PobedaMainPageAssert> {
 
-    SelenideElement mainPagePic = $x("");
-    SelenideElement localeIcon = $x("");
-    ElementsCollection localeList = localeIcon.$$x("");
+    SelenideElement mainPagePic = $x("//img[contains(@srcset, 'Kaliningrad')]");
+    SelenideElement localeIcon = $x("//button[@aria-label='Поиск']//preceding-sibling::button");
+    ElementsCollection localeList = $$x("//div[@role='menuitem']");
 
-    ElementsCollection ticketOptionsList = $$x("");
+    ElementsCollection ticketOptionsList = $$x("//div[contains(@class, 'tabsControlList')]//button");
 
     public PobedaMainPage changeLocale(Locale locale) {
-        localeIcon
-                .shouldBe(visible)
-                .click();
-
-        localeList.stream()
-                .filter(e -> Locale.ENGLISH.getValue().equals(e.getText()))
-                .findFirst()
-                .orElseThrow()
-                .click();
+        localeIcon.shouldBe(visible).click();
+        localeList.find(text(locale.value)).click();
 
         return this;
     }

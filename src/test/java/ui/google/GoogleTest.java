@@ -10,15 +10,16 @@ public class GoogleTest extends GoogleBaseTest {
 
     @BeforeEach
     void init() {
-        Selenide.open(uiConfig.googleBaseUrl());
+      //  Selenide.open(uiConfig.googleBaseUrl());
+        Selenide.open(uiConfig.pobedaBaseUrl());
     }
 
     @Test
     void shouldChangeLocaleOnPobedaMainPage() {
-        googleMainPage
-                .search("Сайт компании Победа")
-                .selectSearchResultByNumber(0, pobedaMainPage)
-                .check()
+     //   googleMainPage
+//                .search("Сайт компании Победа")
+//                .selectSearchResultByNumber(0, pobedaMainPage)
+                pobedaMainPage.check()
                 .checkLoadPage()
                 .page()
                 .changeLocale(Locale.ENGLISH)
