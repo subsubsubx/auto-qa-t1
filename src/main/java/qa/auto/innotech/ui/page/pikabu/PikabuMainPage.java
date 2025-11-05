@@ -6,11 +6,10 @@ import qa.auto.innotech.ui.assertions.Assertable;
 
 import java.util.List;
 
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
 
-public class MainPage implements Assertable<MainPage, MainPageAssert> {
+public class PikabuMainPage implements Assertable<PikabuMainPageAssert> {
 
      final String title = "Горячее – самые интересные и обсуждаемые посты | Пикабу";
      final String inputField = ".//input[@name='%s']";
@@ -22,7 +21,7 @@ public class MainPage implements Assertable<MainPage, MainPageAssert> {
      SelenideElement submitLoginButtonModal = loginModalWindow.$x(".//button[@type='submit']");
      SelenideElement errorPopUpMessageModal = loginModalWindow.$x(".//ancestor::div[@class='auth-modal']//preceding-sibling::span[@class='auth__error auth__error_top']");
 
-    public MainPage openLoginModalWindow() {
+    public PikabuMainPage openLoginModalWindow() {
         loginModalButton
                 .shouldBe(visible)
                 .click();
@@ -30,7 +29,7 @@ public class MainPage implements Assertable<MainPage, MainPageAssert> {
         return this;
     }
 
-    public MainPage performLoginModalWindow(User user) {
+    public PikabuMainPage performLoginModalWindow(User user) {
         List.of(loginModalButton, loginInputModal, passwordInputModal, submitLoginButtonModal)
                 .forEach(e -> e.shouldBe(visible));
         loginInputModal.setValue(user.getLogin());

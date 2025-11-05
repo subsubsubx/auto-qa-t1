@@ -5,7 +5,7 @@ import qa.auto.innotech.ui.assertions.Assertable;
 
 import static com.codeborne.selenide.Selenide.$$x;
 
-public class GoogleSearchPage implements Assertable<GoogleSearchPage, GoogleSearchPageAssert> {
+public class GoogleSearchPage implements Assertable<GoogleSearchPageAssert> {
 
     ElementsCollection searchResults = $$x("//div[@id='rso']//div[starts-with(@class, 'notranslate')]");
 

@@ -1,23 +1,19 @@
 package qa.auto.innotech.ui.page.pobeda;
 
 
-import org.assertj.core.api.AbstractAssert;
+import qa.auto.innotech.ui.assertions.AbstractAssertions;
 
 import static com.codeborne.selenide.CollectionCondition.allMatch;
 import static com.codeborne.selenide.Condition.visible;
 
-public class PobedaMainPageAssert extends AbstractAssert<PobedaMainPageAssert, PobedaMainPage> {
+public class PobedaMainPageAssert extends AbstractAssertions<PobedaMainPage> {
 
     public PobedaMainPageAssert(PobedaMainPage pobedaMainPage) {
-        super(pobedaMainPage, PobedaMainPageAssert.class);
-    }
-
-    public PobedaMainPage page() {
-        return actual;
+        super(pobedaMainPage);
     }
 
     public PobedaMainPageAssert checkLoadPage() {
-        boolean match = actual
+        boolean match = page()
                 .mainPagePic
                 .shouldBe(visible)
                 .$$x(".//following-sibling::div//div").stream()
@@ -29,7 +25,7 @@ public class PobedaMainPageAssert extends AbstractAssert<PobedaMainPageAssert, P
     }
 
     public PobedaMainPageAssert checkEngLocale(PobedaMainPage.Locale locale) {
-        actual.ticketOptionsList.should(allMatch("Текстовки на странице на языке ".concat(locale.getValue()),
+        page().ticketOptionsList.should(allMatch("Текстовки на странице на языке ".concat(locale.getValue()),
                 e -> locale.getCheckStrings().contains(e.getText())));
         return this;
     }

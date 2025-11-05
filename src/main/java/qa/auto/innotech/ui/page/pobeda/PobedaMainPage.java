@@ -13,7 +13,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 
-public class PobedaMainPage implements Assertable<PobedaMainPage, PobedaMainPageAssert> {
+public class PobedaMainPage implements Assertable<PobedaMainPageAssert> {
 
     SelenideElement mainPagePic = $x("//img[contains(@srcset, 'Kaliningrad')]");
     SelenideElement localeIcon = $x("//button[@aria-label='Поиск']//preceding-sibling::button");

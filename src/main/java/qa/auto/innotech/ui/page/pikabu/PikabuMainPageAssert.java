@@ -1,30 +1,26 @@
 package qa.auto.innotech.ui.page.pikabu;
 
-import org.assertj.core.api.AbstractAssert;
 import org.junit.jupiter.api.Assertions;
+import qa.auto.innotech.ui.assertions.AbstractAssertions;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.title;
 
-public class MainPageAssert extends AbstractAssert<MainPageAssert, MainPage> {
+public class PikabuMainPageAssert extends AbstractAssertions<PikabuMainPage> {
 
-    public MainPageAssert(MainPage mainPage) {
-        super(mainPage, MainPageAssert.class);
+    public PikabuMainPageAssert(PikabuMainPage pikabuMainPage) {
+        super(pikabuMainPage);
     }
 
-    public MainPage page() {
-        return actual;
-    }
-
-    public MainPageAssert checkTitle() {
+    public PikabuMainPageAssert checkTitle() {
         Assertions.assertEquals(page().title, title());
 
         return this;
     }
 
-    public MainPageAssert checkInvalidLoginModal() {
-        actual
+    public PikabuMainPageAssert checkInvalidLoginModal() {
+        page()
                 .errorPopUpMessageModal
                 .shouldBe(visible)
                 .shouldHave(text(page().errorMessage));

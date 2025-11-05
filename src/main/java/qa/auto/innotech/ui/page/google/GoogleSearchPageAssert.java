@@ -1,15 +1,9 @@
 package qa.auto.innotech.ui.page.google;
 
-import org.assertj.core.api.AbstractAssert;
-
-public class GoogleSearchPageAssert extends AbstractAssert<GoogleSearchPageAssert, GoogleSearchPage> {
+import qa.auto.innotech.ui.assertions.AbstractAssertions;
+public class GoogleSearchPageAssert extends AbstractAssertions<GoogleSearchPage> {
 
     public GoogleSearchPageAssert(GoogleSearchPage googleSearchPage) {
-        super(googleSearchPage, GoogleSearchPageAssert.class);
+        super(googleSearchPage);
     }
-
-    public GoogleSearchPage page() {
-        return actual;
-    }
-
 }
