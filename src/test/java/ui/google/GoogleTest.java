@@ -16,10 +16,10 @@ public class GoogleTest extends GoogleBaseTest {
 
     @Test
     void shouldChangeLocaleOnPobedaMainPage() {
-     //   googleMainPage
+//        googleMainPage
 //                .search("Сайт компании Победа")
 //                .selectSearchResultByNumber(0, pobedaMainPage)
-                pobedaMainPage.check()
+                 pobedaMainPage.check()
                 .checkLoadPage()
                 .page()
                 .changeLocale(Locale.ENGLISH)
