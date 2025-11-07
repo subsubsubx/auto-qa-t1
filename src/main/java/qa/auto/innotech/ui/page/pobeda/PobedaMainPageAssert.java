@@ -42,7 +42,7 @@ public class PobedaMainPageAssert extends AbstractAssertions<PobedaMainPage> {
 
     public PobedaMainPageAssert checkFailedValidationInput() {
         page().ticketOptionsItem.find(attribute("placeholder", page().locale.getCheckStrings().get(2)))
-                .$x("./../div").shouldHave(attribute("data-empty", "true"));
+                .$x("./../div").shouldHave(attribute("data-failed", "true"));
 
         return this;
     }

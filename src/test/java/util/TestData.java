@@ -22,7 +22,7 @@ public class TestData {
     }
 
     public static TicketData getTestTicketData() {
-        return  new TicketData("Москва", "Санкт-Петербург", null, null);
+        return new TicketData("Москва", "Санкт-Петербург", null, null);
     }
 
     @SneakyThrows
