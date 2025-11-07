@@ -101,7 +101,7 @@ public class PobedaMainPage implements Assertable<PobedaMainPageAssert> {
         ENGLISH("English") {
             @Override
             public List<String> getCheckStrings() {
-                return List.of("From where", "To where", "Departing", "Returning", "Clients");
+                return List.of("From where", "To where", "Departing", "Returning", "Customers");
             }
         };
 
