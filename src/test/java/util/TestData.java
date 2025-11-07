@@ -2,6 +2,7 @@ package util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import qa.auto.innotech.model.TicketData;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,6 +19,10 @@ public class TestData {
         }
 
         return objectMapper;
+    }
+
+    public static TicketData getTestTicketData() {
+        return  new TicketData("Москва", "Санкт-Петербург", null, null);
     }
 
     @SneakyThrows

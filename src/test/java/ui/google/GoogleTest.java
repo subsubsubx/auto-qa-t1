@@ -10,7 +10,7 @@ public class GoogleTest extends GoogleBaseTest {
 
     @BeforeEach
     void init() {
-      //  Selenide.open(uiConfig.googleBaseUrl());
+        //  Selenide.open(uiConfig.googleBaseUrl());
         Selenide.open(uiConfig.pobedaBaseUrl());
     }
 
@@ -19,11 +19,12 @@ public class GoogleTest extends GoogleBaseTest {
 //        googleMainPage
 //                .search("Сайт компании Победа")
 //                .selectSearchResultByNumber(0, pobedaMainPage)
-                 pobedaMainPage.check()
+        pobedaMainPage.check()
                 .checkLoadPage()
+                .checkKaliningradPicAndText()
                 .page()
                 .changeLocale(Locale.ENGLISH)
                 .check()
-                .checkEngLocale(Locale.ENGLISH);
+                .checkLocale();
     }
 }

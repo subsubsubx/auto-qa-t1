@@ -1,9 +1,12 @@
 package qa.auto.innotech.ui.page.pobeda;
 
 
+import com.codeborne.selenide.Selenide;
+import org.junit.jupiter.api.Assertions;
 import qa.auto.innotech.ui.assertions.AbstractAssertions;
 
 import static com.codeborne.selenide.CollectionCondition.allMatch;
+import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Condition.visible;
 
 public class PobedaMainPageAssert extends AbstractAssertions<PobedaMainPage> {
@@ -13,8 +16,15 @@ public class PobedaMainPageAssert extends AbstractAssertions<PobedaMainPage> {
     }
 
     public PobedaMainPageAssert checkLoadPage() {
+        Assertions.assertEquals(page().title, Selenide.title());
+        Assertions.assertTrue(page().companyLogo.shouldBe(visible).isImage());
+        return this;
+    }
+
+
+    public PobedaMainPageAssert checkKaliningradPicAndText() {
         boolean match = page()
-                .mainPagePic
+                .mainPageKaliningradPic
                 .shouldBe(visible)
                 .$$x(".//following-sibling::div//div").stream()
                 .anyMatch(element -> "Полетели в Калининград!".equals(element.getText()));
@@ -24,9 +34,16 @@ public class PobedaMainPageAssert extends AbstractAssertions<PobedaMainPage> {
         return this;
     }
 
-    public PobedaMainPageAssert checkEngLocale(PobedaMainPage.Locale locale) {
-        page().ticketOptionsList.should(allMatch("Текстовки на странице на языке ".concat(locale.getValue()),
-                e -> locale.getCheckStrings().contains(e.getText())));
+    public PobedaMainPageAssert checkLocale() {
+        page().ticketOptionsItem.should(allMatch("Текстовки на странице на языке ".concat(page().locale.getValue()),
+                e -> page().locale.getCheckStrings().contains(e.getAttribute("placeholder"))));
+        return this;
+    }
+
+    public PobedaMainPageAssert checkFailedValidationInput() {
+        page().ticketOptionsItem.find(attribute("placeholder", page().locale.getCheckStrings().get(2)))
+                .$x("./../div").shouldHave(attribute("data-empty", "true"));
+
         return this;
     }
 }
