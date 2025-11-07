@@ -2,6 +2,7 @@ package qa.auto.innotech.ui.page.pikabu;
 
 import com.codeborne.selenide.SelenideElement;
 import qa.auto.innotech.model.User;
+import qa.auto.innotech.ui.BasePage;
 import qa.auto.innotech.ui.assertions.Assertable;
 
 import java.util.List;
@@ -9,7 +10,8 @@ import java.util.List;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
 
-public class PikabuMainPage implements Assertable<PikabuMainPageAssert> {
+public class PikabuMainPage extends BasePage
+        implements Assertable<PikabuMainPageAssert> {
 
     final String title = "Горячее – самые интересные и обсуждаемые посты | Пикабу";
     final String inputField = ".//input[@name='%s']";

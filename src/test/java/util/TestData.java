@@ -2,6 +2,7 @@ package util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import qa.auto.innotech.model.BookingData;
 import qa.auto.innotech.model.TicketData;
 
 import java.io.File;
@@ -42,6 +43,10 @@ public class TestData {
         });
 
         return result;
+    }
+
+    public static BookingData getTestBookingData() {
+        return new BookingData("Qwerty", "XXXXXX");
     }
 }
 

@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import qa.auto.innotech.ui.assertions.AbstractAssertions;
 
 import static com.codeborne.selenide.CollectionCondition.allMatch;
-import static com.codeborne.selenide.Condition.attribute;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 
 public class PobedaMainPageAssert extends AbstractAssertions<PobedaMainPage> {
 
@@ -21,6 +20,17 @@ public class PobedaMainPageAssert extends AbstractAssertions<PobedaMainPage> {
         return this;
     }
 
+    public PobedaMainPageAssert checkBookingItemOpen() {
+        page().bookingItem.$$x(".//input").stream()
+                .allMatch(e -> page().locale.getBookingItemList().contains(e.getAttribute("placeholder")));
+
+        page().bookingItem.$x(".//button")
+                .shouldBe(clickable)
+                .shouldBe(visible)
+                .shouldHave(text(page().locale.getBookingItemList().get(2)));
+
+        return this;
+    }
 
     public PobedaMainPageAssert checkKaliningradPicAndText() {
         boolean match = page()
@@ -31,18 +41,22 @@ public class PobedaMainPageAssert extends AbstractAssertions<PobedaMainPage> {
         if (!match) {
             throw new AssertionError("Text not found");
         }
+
         return this;
     }
 
     public PobedaMainPageAssert checkLocale() {
         page().ticketOptionsItem.should(allMatch("Текстовки на странице на языке ".concat(page().locale.getValue()),
                 e -> page().locale.getCheckStrings().contains(e.getAttribute("placeholder"))));
+
         return this;
     }
 
     public PobedaMainPageAssert checkFailedValidationInput() {
         page().ticketOptionsItem.find(attribute("placeholder", page().locale.getCheckStrings().get(2)))
-                .$x("./../div").shouldHave(attribute("data-failed", "true"));
+                .$x("./../div")
+                .shouldBe(visible)
+                .shouldHave(attribute("data-failed", "true"));
 
         return this;
     }

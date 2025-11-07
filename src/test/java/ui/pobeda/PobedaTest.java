@@ -5,6 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.TestData;
 
+import static util.TestData.getTestBookingData;
+import static util.TestData.getTestTicketData;
+
 public class PobedaTest extends PobedaBaseTest {
 
     @BeforeEach
@@ -27,8 +30,24 @@ public class PobedaTest extends PobedaBaseTest {
                 .checkLocale()
                 .page()
                 .scrollToSearchItem()
-                .enterData(TestData.getTestTicketData())
+                .fillTicketData(getTestTicketData())
                 .check()
                 .checkFailedValidationInput();
+    }
+
+    @Test
+    void shouldReturnErrorOnInvalidInput() {
+        mainPage.check()
+                .checkLoadPage()
+                .page()
+                .selectTopBarItem(3)
+                .check()
+                .checkBookingItemOpen()
+                .page()
+                .fillBookingData(getTestBookingData(), true, bookingPage)
+                .searchBooking()
+                .check()
+                .checkErrorBookingMessage();
+
     }
 }

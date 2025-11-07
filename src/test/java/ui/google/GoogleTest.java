@@ -18,7 +18,7 @@ public class GoogleTest extends GoogleBaseTest {
     void shouldChangeLocaleOnPobedaMainPage() {
 //        googleMainPage
 //                .search("Сайт компании Победа")
-//                .selectSearchResultByNumber(0, pobedaMainPage)
+//                .selectSearchResultByNumber(1, pobedaMainPage)
         pobedaMainPage.check()
                 .checkLoadPage()
                 .checkKaliningradPicAndText()
